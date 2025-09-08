@@ -5,6 +5,8 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
+import { generateClient } from 'aws-amplify/api';
+import { Schema } from '../../../../amplify/data/resource';
 
 @Component({
   selector: 'app-todos',
@@ -14,6 +16,7 @@ import {
 })
 export class TodosComponent {
   todoForm: FormGroup;
+  client = generateClient<Schema>();
 
   constructor(private fb: FormBuilder) {
     this.todoForm = this.fb.group({
@@ -21,9 +24,18 @@ export class TodosComponent {
     });
   }
 
+  async insertNewTodo() {
+    const res = await this.client.models.Todo.create({
+      content: this.todoForm.value.taskTitle,
+      isCompleted: false,
+    });
+    console.log(res);
+  }
+
   onSubmit() {
     if (this.todoForm.valid) {
       console.log('Task:', this.todoForm.value.taskTitle);
+      this.insertNewTodo();
     } else {
       console.log('field is required.');
     }
