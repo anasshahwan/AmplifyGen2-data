@@ -17,7 +17,11 @@ import { Schema } from '../../../../amplify/data/resource';
 export class TodosComponent {
   todoForm: FormGroup;
   client = generateClient<Schema>();
+  todos: any[] = [];
 
+  ngOnInit() {
+    this.listTodos();
+  }
   constructor(private fb: FormBuilder) {
     this.todoForm = this.fb.group({
       taskTitle: ['', Validators.required],
@@ -30,6 +34,11 @@ export class TodosComponent {
       isCompleted: false,
     });
     console.log(res);
+  }
+
+  async listTodos() {
+    const res = await this.client.models.Todo.list();
+    this.todos = res.data;
   }
 
   onSubmit() {
