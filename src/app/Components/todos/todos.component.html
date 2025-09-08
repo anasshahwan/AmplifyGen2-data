@@ -15,12 +15,7 @@
     }
 
     @for (todo of todos; track todo.id) {
-      <div class="todo-card">
-        <h3>{{ todo.content }}</h3>
-        <p>Status: {{ todo.isCompleted ? "Done" : "Not Done" }}</p>
-        <small>Created: {{ todo.createdAt }}</small>
-        <hr />
-      </div>
+      <app-todo [todoData]="todo" />
     }
 
     <button type="submit" [disabled]="todoForm.invalid">Add Task</button>

@@ -7,10 +7,11 @@ import {
 } from '@angular/forms';
 import { generateClient } from 'aws-amplify/api';
 import { Schema } from '../../../../amplify/data/resource';
+import { TodoComponent } from '../todo/todo.component';
 
 @Component({
   selector: 'app-todos',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, TodoComponent],
   templateUrl: './todos.component.html',
   styleUrl: './todos.component.scss',
 })
