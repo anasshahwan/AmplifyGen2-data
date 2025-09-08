@@ -21,6 +21,7 @@ export class TodosComponent {
 
   ngOnInit() {
     this.listTodos();
+    this.getTodoById('2910xa92');
   }
   constructor(private fb: FormBuilder) {
     this.todoForm = this.fb.group({
@@ -39,6 +40,11 @@ export class TodosComponent {
   async listTodos() {
     const res = await this.client.models.Todo.list();
     this.todos = res.data;
+  }
+
+  async getTodoById(todoId: string) {
+    const res = await this.client.models.Todo.get({ id: todoId });
+    console.log(res);
   }
 
   onSubmit() {
