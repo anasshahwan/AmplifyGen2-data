@@ -1,6 +1,22 @@
 <div class="todo-card">
-  <h3>{{ todoData.content }}</h3>
-  <p>Status: {{ todoData.isCompleted ? "Done" : "Not Done" }}</p>
+  @if (!isEditing) {
+    <div class="flex">
+      <h3>{{ todoData.content }}</h3>
+      <button (click)="startEditing()">Edit</button>
+    </div>
+  } @else {
+    <input type="text" [(ngModel)]="todoData.content" />
+    <button (click)="updateTodoTitle()">Save</button>
+    <button (click)="cancelEditing()">Cancel</button>
+  }
+  <div>
+    <input
+      type="checkbox"
+      [(ngModel)]="todoData.isCompleted"
+      (change)="onStatuschange()"
+    />
+    Status : {{ todoData.isCompleted ? "Done" : "not Done" }}
+  </div>
   <small>Created: {{ todoData.createdAt }}</small>
   <hr />
 </div>
