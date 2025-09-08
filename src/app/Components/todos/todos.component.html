@@ -8,9 +8,19 @@
       placeholder="What's on your mind?"
     />
 
-    @if ( todoForm.get("taskTitle")?.invalid &&
-    todoForm.get("taskTitle")?.touched ) {
-    <div class="error">Task title is required.</div>
+    @if (
+      todoForm.get("taskTitle")?.invalid && todoForm.get("taskTitle")?.touched
+    ) {
+      <div class="error">Task title is required.</div>
+    }
+
+    @for (todo of todos; track todo.id) {
+      <div class="todo-card">
+        <h3>{{ todo.content }}</h3>
+        <p>Status: {{ todo.isCompleted ? "Done" : "Not Done" }}</p>
+        <small>Created: {{ todo.createdAt }}</small>
+        <hr />
+      </div>
     }
 
     <button type="submit" [disabled]="todoForm.invalid">Add Task</button>
