@@ -10,7 +10,14 @@ const schema = a.schema({
   Todo: a
     .model({
       content: a.string(),
-      isCompleted: a.boolean(),
+      isCompleted: a.boolean().default(false),
+      price: a.float(),
+      location: a.customType({
+        long: a.float(),
+        lat: a.float(),
+      }),
+      privacySetting: a.enum(['public', 'private']),
+      tags: a.string().array().required(),
     })
     .authorization((allow) => [allow.guest()]),
 });
