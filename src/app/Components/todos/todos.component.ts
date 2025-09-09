@@ -29,7 +29,7 @@ export class TodosComponent {
     this.pagination('');
 
     // this.listTodos();
-    //  this.getTodoById('2910xa92');
+    this.getTodoById('0422aa3d-0bfa-4d31-9dff-75b791b5a8c3');
     // this.listTodoRealTime();
   }
   constructor(private fb: FormBuilder) {
@@ -46,6 +46,7 @@ export class TodosComponent {
     const { nextToken, data } = await this.client.models.Todo.list({
       limit: 3,
       nextToken: token,
+      selectionSet: ['id', 'content', 'isCompleted'],
     });
     if (nextToken) {
       this.showMoreButton = true;
@@ -89,7 +90,10 @@ export class TodosComponent {
   }
 
   async getTodoById(todoId: string) {
-    const res = await this.client.models.Todo.get({ id: todoId });
+    const res = await this.client.models.Todo.get(
+      { id: todoId },
+      { selectionSet: ['content'] },
+    );
     console.log(res);
   }
 
