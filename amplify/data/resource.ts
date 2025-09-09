@@ -20,6 +20,13 @@ const schema = a.schema({
       tags: a.string().array().required(),
     })
     .authorization((allow) => [allow.guest()]),
+
+  Post: a
+    .model({
+      content: a.string(),
+      isCompleted: a.string(),
+    })
+    .authorization((allow) => [allow.publicApiKey()]),
 });
 
 export type Schema = ClientSchema<typeof schema>;
@@ -27,7 +34,9 @@ export type Schema = ClientSchema<typeof schema>;
 export const data = defineData({
   schema,
   authorizationModes: {
-    defaultAuthorizationMode: 'identityPool',
+    defaultAuthorizationMode: 'apiKey',
+
+    //    defaultAuthorizationMode: 'identityPool',
   },
 });
 
