@@ -25,6 +25,13 @@ export class TodoComponent {
   cancelEditing() {
     this.isEditing = false;
   }
+  async deleteTodo() {
+    const todoToBeDeleted = {
+      id: this.todoData.id,
+    };
+    const res = await this.client.models.Todo.delete(todoToBeDeleted);
+    console.log(res);
+  }
   async updateTodoTitle() {
     const res = await this.client.models.Todo.update({
       id: this.todoData.id,

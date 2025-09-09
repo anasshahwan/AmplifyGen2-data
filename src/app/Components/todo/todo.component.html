@@ -18,5 +18,7 @@
     Status : {{ todoData.isCompleted ? "Done" : "not Done" }}
   </div>
   <small>Created: {{ todoData.createdAt }}</small>
+  <button (click)="deleteTodo()">Delete Me</button>
+
   <hr />
 </div>
