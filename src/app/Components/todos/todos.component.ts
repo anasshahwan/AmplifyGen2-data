@@ -21,8 +21,9 @@ export class TodosComponent {
   todos: any[] = [];
 
   ngOnInit() {
-    this.listTodos();
-    this.getTodoById('2910xa92');
+    //  this.listTodos();
+    //  this.getTodoById('2910xa92');
+    this.listTodoRealTime();
   }
   constructor(private fb: FormBuilder) {
     this.todoForm = this.fb.group({
@@ -38,6 +39,13 @@ export class TodosComponent {
     console.log(res);
   }
 
+  async listTodoRealTime() {
+    this.client.models.Todo.observeQuery().subscribe({
+      next: (data) => {
+        this.todos = data.items;
+      },
+    });
+  }
   async listTodos() {
     const res = await this.client.models.Todo.list();
     this.todos = res.data;
