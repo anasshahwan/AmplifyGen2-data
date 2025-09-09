@@ -14,10 +14,18 @@
       <div class="error">Task title is required.</div>
     }
 
-    @for (todo of todos; track todo.id) {
-      <app-todo [todoData]="todo" />
-    }
-
     <button type="submit" [disabled]="todoForm.invalid">Add Task</button>
   </form>
+  <br />
+  <div class="flex">
+    <small>Filter By : </small>
+    <select [(ngModel)]="todoStatus" (change)="filterBy()">
+      <option value="true">Done</option>
+      <option value="false">Not Done</option>
+    </select>
+  </div>
+
+  @for (todo of todos; track todo.id) {
+    <app-todo [todoData]="todo" />
+  }
 </div>

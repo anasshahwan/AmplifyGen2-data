@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
+  FormsModule,
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
@@ -11,7 +12,7 @@ import { TodoComponent } from '../todo/todo.component';
 
 @Component({
   selector: 'app-todos',
-  imports: [ReactiveFormsModule, TodoComponent],
+  imports: [ReactiveFormsModule, TodoComponent, FormsModule],
   templateUrl: './todos.component.html',
   styleUrl: './todos.component.scss',
 })
@@ -19,16 +20,28 @@ export class TodosComponent {
   todoForm: FormGroup;
   client = generateClient<Schema>();
   todos: any[] = [];
+  todoStatus = false;
 
   ngOnInit() {
-    //  this.listTodos();
+    this.listTodos();
     //  this.getTodoById('2910xa92');
-    this.listTodoRealTime();
+    // this.listTodoRealTime();
   }
   constructor(private fb: FormBuilder) {
     this.todoForm = this.fb.group({
       taskTitle: ['', Validators.required],
     });
+  }
+
+  async filterBy() {
+    const res = await this.client.models.Todo.list({
+      filter: {
+        isCompleted: {
+          eq: this.todoStatus,
+        },
+      },
+    });
+    this.todos = res.data;
   }
 
   async insertNewTodo() {
