@@ -19,7 +19,7 @@ const schema = a.schema({
       privacySetting: a.enum(['public', 'private']),
       tags: a.string().array().required(),
     })
-    .authorization((allow) => [allow.guest()]),
+    .authorization((allow) => [allow.guest().to(['read', 'update'])]),
 });
 
 export type Schema = ClientSchema<typeof schema>;
