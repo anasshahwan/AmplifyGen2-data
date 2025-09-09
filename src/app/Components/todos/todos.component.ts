@@ -73,6 +73,7 @@ export class TodosComponent {
     const res = await this.client.models.Todo.create({
       content: this.todoForm.value.taskTitle,
       isCompleted: false,
+      tags: ['tag1'],
     });
     console.log(res);
   }
