@@ -9,6 +9,7 @@ and "delete" any "Todo" records.
 const schema = a.schema({
   Todo: a
     .model({
+      todoId: a.id().required(),
       content: a.string(),
       isCompleted: a.boolean().default(false),
       price: a.float(),
@@ -19,6 +20,7 @@ const schema = a.schema({
       privacySetting: a.enum(['public', 'private']),
       tags: a.string().array().required(),
     })
+    .identifier(['todoId'])
     .authorization((allow) => [allow.guest()]),
 });
 

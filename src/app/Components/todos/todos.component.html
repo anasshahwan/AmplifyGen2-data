@@ -25,7 +25,7 @@
     </select>
   </div>
 
-  @for (todo of todos; track todo.id) {
+  @for (todo of todos; track todo.todoId) {
     <app-todo [todoData]="todo" />
   }
   Current Page : {{ currentPage }}

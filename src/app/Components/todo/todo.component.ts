@@ -27,14 +27,14 @@ export class TodoComponent {
   }
   async deleteTodo() {
     const todoToBeDeleted = {
-      id: this.todoData.id,
+      todoId: this.todoData.todoId,
     };
     const res = await this.client.models.Todo.delete(todoToBeDeleted);
     console.log(res);
   }
   async updateTodoTitle() {
     const res = await this.client.models.Todo.update({
-      id: this.todoData.id,
+      todoId: this.todoData.todoId,
       content: this.todoData.content,
     });
     console.log(res);
@@ -42,7 +42,7 @@ export class TodoComponent {
   }
   async onStatuschange() {
     const res = await this.client.models.Todo.update({
-      id: this.todoData.id,
+      todoId: this.todoData.id,
       isCompleted: this.todoData.isCompleted,
     });
     console.log(res);

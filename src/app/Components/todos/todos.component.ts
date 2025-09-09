@@ -46,7 +46,7 @@ export class TodosComponent {
     const { nextToken, data } = await this.client.models.Todo.list({
       limit: 3,
       nextToken: token,
-      selectionSet: ['id', 'content', 'isCompleted'],
+      selectionSet: ['todoId', 'content', 'isCompleted'],
     });
     if (nextToken) {
       this.showMoreButton = true;
@@ -71,6 +71,7 @@ export class TodosComponent {
 
   async insertNewTodo() {
     const res = await this.client.models.Todo.create({
+      todoId: crypto.randomUUID(),
       content: this.todoForm.value.taskTitle,
       isCompleted: false,
       tags: ['tag1'],
@@ -92,7 +93,7 @@ export class TodosComponent {
 
   async getTodoById(todoId: string) {
     const res = await this.client.models.Todo.get(
-      { id: todoId },
+      { todoId: todoId },
       { selectionSet: ['content'] },
     );
     console.log(res);
