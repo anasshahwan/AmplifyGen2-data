@@ -28,4 +28,8 @@
   @for (todo of todos; track todo.id) {
     <app-todo [todoData]="todo" />
   }
+  Current Page : {{ currentPage }}
+  @if (showMoreButton) {
+    <button (click)="getMoreData()">Show more</button>
+  }
 </div>

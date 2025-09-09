@@ -22,8 +22,13 @@ export class TodosComponent {
   todos: any[] = [];
   todoStatus = false;
 
+  showMoreButton = false;
+  showMoreToken = '';
+  currentPage = 1;
   ngOnInit() {
-    this.listTodos();
+    this.pagination('');
+
+    // this.listTodos();
     //  this.getTodoById('2910xa92');
     // this.listTodoRealTime();
   }
@@ -31,6 +36,25 @@ export class TodosComponent {
     this.todoForm = this.fb.group({
       taskTitle: ['', Validators.required],
     });
+  }
+
+  async getMoreData() {
+    this.pagination(this.showMoreToken);
+    this.currentPage++;
+  }
+  async pagination(token: string) {
+    const { nextToken, data } = await this.client.models.Todo.list({
+      limit: 3,
+      nextToken: token,
+    });
+    if (nextToken) {
+      this.showMoreButton = true;
+      this.showMoreToken = nextToken;
+    } else {
+      this.showMoreButton = false;
+    }
+    console.log(nextToken);
+    this.todos = data;
   }
 
   async filterBy() {
